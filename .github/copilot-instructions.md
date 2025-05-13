@@ -2,7 +2,13 @@
 
 - Always use the standard labels for git commit messages.
 - Do not show all the code that you propose, onlynthe important parts and keep it short
-- The application will be written with VUE framework. Use all the best practices from VUE.
+- The application will be written with VUE framework. Use all the best practices from VUE. Use Composition API and VUE 3.
+- Use Pinia for state management.
+- Use official VUE documentation for all the VUE features.
+- When providing code examples:
+  - Show only key snippets that illustrate core concepts (5-15 lines maximum)
+  - Focus on architecture and patterns rather than full implementations, unless asked
+- DO NOT use typescript.
 
 # Project Description
 
