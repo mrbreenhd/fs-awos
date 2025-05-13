@@ -45,3 +45,44 @@ AIRPORT API RESPONSE:
 	]
 }
 ```
+
+## UI Considerations
+
+The UI should be similar to an aviation weather observation system (AWOS) display with:
+
+## Header section showing:
+
+Airport ICAO code
+Current date/time
+Elapsed time information
+
+## Weather data panels displaying:
+
+Pressure readings in both hPa and inHg
+Temperature (°C and °F)
+Dew point (°C and °F)
+Transition altitude/height (in feet)
+Transition level
+Density altitude
+Visibility (in Km)
+Cloud information (FEW, SCT with height in feet)
+METAR information displayed in a highlighted banner
+
+## Runway information section showing:
+
+Selected runway (e.g., "RWY 03L")
+Runway elevation
+Wind direction visualization with:
+
+## A circular compass display showing:
+
+Runway heading (displayed as a fixed reference)
+Wind direction (shown as a movable arrow/indicator)
+Degree markings (0-360°)
+Current wind heading in digital format (e.g., "030°")
+Wind speed value (e.g., "14kt")
+
+## Controls to switch between runways
+
+Possibly tabs or sections for additional information
+The primary focus should be the visual relationship between runway heading and wind direction, clearly displaying crosswind component information for pilots.
