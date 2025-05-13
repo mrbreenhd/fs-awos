@@ -9,6 +9,7 @@
   - Show only key snippets that illustrate core concepts (5-15 lines maximum)
   - Focus on architecture and patterns rather than full implementations, unless asked
 - DO NOT use typescript.
+- Treat me like i am a junior software engineer. Provide step by step instructions in short form and DO NOT expand too much.
 
 # Project Description
 
