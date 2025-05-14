@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 export const useAwosStore = defineStore('awos', () => {
   const icaoAirport = ref('')
-  const airport = ref('')
+  const airport = ref({})
   const metar = ref('')
   const selectedRunway = ref('')
 
@@ -19,12 +19,9 @@ export const useAwosStore = defineStore('awos', () => {
       `https://apps.estassinos.com/api/fs-core-data-api/airports.php?key=soulis&icao=${icao}`,
     )
     const data = await response.json()
-    if (data && data.length > 0) {
-      airport.value = data[0]
-    } else {
-      airport.value = null
-    }
+    airport.value = data
   }
+
   return {
     icaoAirport,
     airport,
