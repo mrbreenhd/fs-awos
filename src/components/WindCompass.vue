@@ -130,7 +130,7 @@ const hasGust = computed(() => props.windGust && props.windGust > props.windSpee
 
 const gustDisplay = computed(() => (hasGust.value ? `G${props.windGust}` : ''))
 
-const labelRadius = 135
+const labelRadius = 123
 const labelX = (angle) => {
   const rad = toRadians(angle)
   return 200 + labelRadius * Math.sin(rad)
