@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useAwosStore } from './stores/awosStore'
+import WindCompass from './components/WindCompass.vue'
 const store = useAwosStore()
 const inputIcao = ref('')
 
@@ -90,7 +91,13 @@ const fetchAirportData = () => {
     </section>
     <!-- Row 3: Compass & Visuals -->
     <section class="w-full max-w-xl">
-      <!-- Compass and runway/wind visualization go here -->
+      <WindCompass
+        :runwayHeading="30"
+        runwayName="03L"
+        :windDirection="Number(store.decodedMetar.wind?.degrees)"
+        :windSpeed="Number(store.decodedMetar.wind?.speed)"
+        :windGust="Number(store.decodedMetar.wind?.gust)"
+      />
     </section>
   </main>
 </template>
