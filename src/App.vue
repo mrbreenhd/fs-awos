@@ -1,16 +1,33 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useAwosStore } from './stores/awosStore'
 import WindCompass from './components/WindCompass.vue'
 const store = useAwosStore()
 const inputIcao = ref('')
 
-const fetchAirportData = () => {
+const selectedRunway = ref(null)
+
+const fetchAirportData = async () => {
   if (inputIcao.value) {
-    store.fetchAirport(inputIcao.value.trim().toUpperCase())
+    await store.fetchAirport(inputIcao.value.trim().toUpperCase())
+    if (store.airport?.runways?.length) {
+      selectedRunway.value = store.airport.runways[0]
+    }
     store.fetchMetar(inputIcao.value.trim().toUpperCase())
   }
 }
+
+// Update selected runway if airport changes
+watch(
+  () => store.airport,
+  (airport) => {
+    if (airport?.runways?.length) {
+      selectedRunway.value = airport.runways[0]
+    } else {
+      selectedRunway.value = null
+    }
+  },
+)
 </script>
 
 <template>
@@ -26,6 +43,18 @@ const fetchAirportData = () => {
         />
         <button class="bg-green-700 text-black px-4 py-2 rounded font-bold">Load</button>
       </form>
+      <!-- Runway selector -->
+      <div v-if="store.airport?.runways?.length" class="mt-3">
+        <label class="text-green-400 block mb-1">Select Runway:</label>
+        <select
+          v-model="selectedRunway"
+          class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
+        >
+          <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
+            {{ runway.runway }} ({{ runway.heading_degrees }}°)
+          </option>
+        </select>
+      </div>
       <!-- Header info will go here -->
     </section>
     <!-- Row 2: METAR Details -->
@@ -92,8 +121,9 @@ const fetchAirportData = () => {
     <!-- Row 3: Compass & Visuals -->
     <section class="w-full max-w-xl">
       <WindCompass
-        :runwayHeading="30"
-        runwayName="03L"
+        v-if="selectedRunway"
+        :runwayHeading="selectedRunway.heading_degrees"
+        :runwayName="selectedRunway.runway"
         :windDirection="Number(store.decodedMetar.wind?.degrees)"
         :windSpeed="Number(store.decodedMetar.wind?.speed)"
         :windGust="Number(store.decodedMetar.wind?.gust)"
