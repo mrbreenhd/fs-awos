@@ -34,7 +34,7 @@ watch(
   <main class="min-h-screen bg-black flex flex-col items-center justify-center p-4">
     <!-- Row 1: Input & Info -->
     <section class="w-full max-w-xl mb-4">
-      <form @submit.prevent="fetchAirportData" class="flex gap-2">
+      <form @submit.prevent="fetchAirportData" class="flex gap-2 items-center">
         <input
           v-model="inputIcao"
           maxlength="4"
@@ -42,19 +42,18 @@ watch(
           placeholder="Enter ICAO (e.g. LGAV)"
         />
         <button class="bg-green-700 text-black px-4 py-2 rounded font-bold">Load</button>
+        <!-- Runway selector moved here -->
+        <div v-if="store.airport?.runways?.length" class="flex-1 min-w-0">
+          <select
+            v-model="selectedRunway"
+            class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
+          >
+            <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
+              {{ runway.runway }} ({{ runway.heading_degrees }}°)
+            </option>
+          </select>
+        </div>
       </form>
-      <!-- Runway selector -->
-      <div v-if="store.airport?.runways?.length" class="mt-3">
-        <label class="text-green-400 block mb-1">Select Runway:</label>
-        <select
-          v-model="selectedRunway"
-          class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
-        >
-          <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
-            {{ runway.runway }} ({{ runway.heading_degrees }}°)
-          </option>
-        </select>
-      </div>
       <!-- Header info will go here -->
     </section>
     <!-- Row 2: METAR Details -->
