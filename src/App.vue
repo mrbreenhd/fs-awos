@@ -64,7 +64,7 @@ watch(
       <div class="bg-gray-900 text-green-400 font-mono px-3 py-2 rounded mb-2">
         {{ store.metar }}
       </div>
-      <table class="w-full text-green-400 bg-gray-900 rounded text-sm">
+      <table class="w-full text-green-400 bg-gray-900 rounded text-md">
         <tbody>
           <tr>
             <td class="font-bold">Station</td>
