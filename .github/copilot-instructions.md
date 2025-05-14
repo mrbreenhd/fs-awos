@@ -5,6 +5,7 @@
 - The application will be written with VUE framework. Use all the best practices from VUE. Use Composition API and VUE 3.
 - Use Pinia for state management.
 - Use official VUE documentation for all the VUE features.
+- Use official TAILWIND documentation for all the TAILWIND features.
 - When providing code examples:
   - Show only key snippets that illustrate core concepts (5-15 lines maximum)
   - Focus on architecture and patterns rather than full implementations, unless asked
@@ -30,32 +31,32 @@ AIRPORT API RESPONSE:
 
 ```json
 {
-	"airport_icao": "LGAV",
-	"airport_name": "Athens Eleftherios Venizelos International Airport",
-	"runways": [
-		{
-			"runway": "03L",
-			"heading_degrees": 30
-		},
-		{
-			"runway": "03R",
-			"heading_degrees": 30
-		},
-		{
-			"runway": "21L",
-			"heading_degrees": 210
-		},
-		{
-			"runway": "21R",
-			"heading_degrees": 210
-		}
-	]
+  "airport_icao": "LGAV",
+  "airport_name": "Athens Eleftherios Venizelos International Airport",
+  "runways": [
+    {
+      "runway": "03L",
+      "heading_degrees": 30
+    },
+    {
+      "runway": "03R",
+      "heading_degrees": 30
+    },
+    {
+      "runway": "21L",
+      "heading_degrees": 210
+    },
+    {
+      "runway": "21R",
+      "heading_degrees": 210
+    }
+  ]
 }
 ```
 
 ## UI Considerations
 
-The UI should be similar to an aviation weather observation system (AWOS) display with:
+The UI should be responsive and similar to an aviation weather observation system (AWOS) display with:
 
 ## Header section showing:
 

@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <p>APP</p>
+  <h1 class="text-3xl font-bold underline">Hello!</h1>
 </template>
 
 <style scoped></style>
