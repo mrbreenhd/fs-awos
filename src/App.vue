@@ -34,16 +34,19 @@ watch(
   <main class="min-h-screen h-screen overflow-hidden bg-black flex flex-col items-center p-3">
     <!-- Row 1: Input & Info -->
     <section class="w-full max-w-xl mb-4">
+      <!-- Form controls with labels -->
       <form @submit.prevent="fetchAirportData" class="flex gap-2 items-center">
+        <label class="text-green-400 font-bold">ICAO:</label>
         <input
           v-model="inputIcao"
           maxlength="4"
           class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
-          placeholder="Enter ICAO (e.g. LGAV)"
+          placeholder="Enter ICAO"
         />
         <button class="bg-green-700 text-black px-4 py-2 rounded font-bold">Load</button>
-        <!-- Runway selector moved here -->
-        <div v-if="store.airport?.runways?.length" class="flex-1 min-w-0">
+
+        <div v-if="store.airport?.runways?.length" class="flex items-center gap-2 flex-1 min-w-0">
+          <label class="text-green-400 font-bold">RWY:</label>
           <select
             v-model="selectedRunway"
             class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
