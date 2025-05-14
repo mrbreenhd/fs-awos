@@ -1,5 +1,11 @@
 <template>
-  <svg width="400" height="480" viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="400"
+    height="480"
+    viewBox="-40 -40 480 600"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid meet"
+  >
     <!-- Compass Background -->
     <circle cx="200" cy="200" r="150" fill="#1e1e1e" stroke="#444" stroke-width="4" />
 
@@ -33,32 +39,38 @@
       fill="#444"
       :transform="'rotate(' + runwayHeading + ' 200 200)'"
     />
+
+    <!-- Runway Name (Top) -->
     <text
       x="200"
       y="115"
-      font-size="14"
+      font-size="20"
       text-anchor="middle"
       fill="#0f0"
+      stroke="black"
+      stroke-width="0.5"
       :transform="'rotate(' + runwayHeading + ' 200 200)'"
     >
       {{ runwayName }}
     </text>
+
+    <!-- Opposite Runway (Bottom) -->
     <text
       x="200"
-      y="295"
-      font-size="14"
+      y="285"
+      font-size="20"
       text-anchor="middle"
       fill="#0f0"
-      :transform="'rotate(' + (runwayHeading + 180) + ' 200 200)'"
+      stroke="black"
+      stroke-width="0.5"
+      :transform="'rotate(' + runwayHeading + ' 200 200)'"
     >
       {{ oppositeRunway }}
     </text>
 
     <!-- Wind Arrow and Wind Direction Label -->
     <g :transform="'rotate(' + windDirection + ' 200 200)'">
-      <!-- Red Arrow -->
       <polygon points="200,40 190,20 210,20" fill="red" stroke="black" stroke-width="1" />
-      <!-- Wind Direction Label (larger & further above arrow) -->
       <text x="200" y="5" font-size="18" text-anchor="middle" fill="white">
         {{ windDirection.toString().padStart(3, '0') }}°
       </text>
@@ -70,9 +82,9 @@
     </text>
 
     <!-- Headwind / Crosswind Components -->
-    <g font-size="14" font-family="monospace" fill="#0ff">
-      <text x="200" y="395" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
-      <text x="200" y="415" text-anchor="middle">
+    <g font-size="14" font-family="monospace" fill="#0f0">
+      <text x="200" y="435" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
+      <text x="200" y="455" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
       </text>
     </g>
@@ -82,7 +94,6 @@
 <script setup>
 import { computed } from 'vue'
 
-// Props
 const props = defineProps({
   runwayHeading: { type: Number, required: true },
   runwayName: { type: String, required: true },
@@ -91,26 +102,21 @@ const props = defineProps({
   windGust: { type: Number, default: null },
 })
 
-// Compass tick marks every 30°
 const majorAngles = computed(() => Array.from({ length: 12 }, (_, i) => i * 30))
 
-// Opposite runway label (reciprocal heading)
 const oppositeRunway = computed(() => {
   const opposite = (props.runwayHeading + 180) % 360
   return String(Math.round(opposite / 10)).padStart(2, '0')
 })
 
-// Degrees to radians
 const toRadians = (deg) => (deg * Math.PI) / 180
 
-// Relative wind angle (windDirection - runwayHeading, normalized)
 const relativeAngle = computed(() => {
   let delta = props.windDirection - props.runwayHeading
   delta = ((delta + 540) % 360) - 180
   return delta
 })
 
-// Wind components
 const headwind = computed(() => props.windSpeed * Math.cos(toRadians(relativeAngle.value)))
 
 const crosswind = computed(() =>
@@ -123,12 +129,10 @@ const crosswindDir = computed(() => {
   return dir > 0 ? '(from right)' : '(from left)'
 })
 
-// Gust logic
 const hasGust = computed(() => props.windGust && props.windGust > props.windSpeed)
 
 const gustDisplay = computed(() => (hasGust.value ? `G${props.windGust}` : ''))
 
-// Tick label positioning using trigonometry
 const labelRadius = 135
 const labelX = (angle) => {
   const rad = toRadians(angle)
@@ -141,5 +145,7 @@ const labelY = (angle) => {
 </script>
 
 <style scoped>
-/* Optional styling */
+svg {
+  overflow: visible;
+}
 </style>
