@@ -1,7 +1,6 @@
 <template>
   <svg
-    width="400"
-    height="480"
+    class="w-full h-full"
     viewBox="-40 -40 480 600"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="xMidYMid meet"
@@ -17,7 +16,12 @@
     </g>
 
     <!-- Tick Labels -->
-    <g font-size="12" fill="#0f0" font-family="monospace">
+    <g
+      font-size="12"
+      fill="#4ade80"
+      font-family="'Share Tech Mono', monospace"
+      style="letter-spacing: 3px"
+    >
       <text
         v-for="angle in majorAngles"
         :key="'label-' + angle"
@@ -30,26 +34,57 @@
       </text>
     </g>
 
-    <!-- Runway Strip (only graphic, no text) -->
+    <!-- Runway Strip -->
     <g :transform="'rotate(' + runwayHeading + ' 200 200)'">
-      <rect x="190" y="100" width="20" height="200" fill="#444" />
+      <!-- Main runway surface (black) - made wider -->
+      <rect x="185" y="100" width="30" height="200" fill="black" />
+
+      <!-- Runway Centerline (white, dashed) - position unchanged -->
+      <line
+        x1="200"
+        y1="105"
+        x2="200"
+        y2="295"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-dasharray="15, 10"
+      />
+
+      <!-- Runway Edge Lines (white, solid) - adjusted for wider runway -->
+      <line x1="186" y1="100" x2="186" y2="300" stroke="white" stroke-width="1" />
+      <line x1="214" y1="100" x2="214" y2="300" stroke="white" stroke-width="1" />
     </g>
 
-    <!-- Wind Arrow and Wind Direction Label -->
+    <!-- Wind Arrow -->
     <g :transform="'rotate(' + windDirection + ' 200 200)'">
       <polygon points="200,40 190,20 210,20" fill="red" stroke="black" stroke-width="1" />
-      <text x="200" y="5" font-size="18" text-anchor="middle" fill="white">
-        {{ windDirection.toString().padStart(3, '0') }}°
-      </text>
     </g>
 
-    <!-- Center Display: Runway and Wind -->
-    <text x="200" y="210" font-size="20" text-anchor="middle" fill="#0f0" font-family="monospace">
-      {{ runwayName }} / {{ windSpeed }}{{ gustDisplay }} kt
+    <!-- Aircraft icon (at runway end) -->
+    <g :transform="'rotate(' + (runwayHeading + 180) + ' 200 200)'">
+      <!-- Arrow at top end of runway -->
+      <g transform="translate(0, 180)">
+        <polygon points="200,30 190,0 210,0" fill="yellow" stroke="black" stroke-width="2" />
+        <rect x="198" y="0" width="4" height="15" fill="yellow" />
+      </g>
+    </g>
+
+    <!-- Wind Direction, Speed, and Gust Label (Top Center) -->
+    <text
+      x="200"
+      y="10"
+      font-size="18"
+      text-anchor="middle"
+      fill="white"
+      font-family="'Share Tech Mono', monospace"
+      style="pointer-events: none"
+    >
+      RWY: {{ runwayName }} - {{ windDirection.toString().padStart(3, '0') }}° / {{ windSpeed
+      }}{{ gustDisplay }} kt
     </text>
 
     <!-- Headwind / Crosswind Components -->
-    <g font-size="14" font-family="monospace" fill="#0f0">
+    <g font-size="14" font-family="'Share Tech Mono', monospace" fill="#4ade80">
       <text x="200" y="435" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
       <text x="200" y="455" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
@@ -67,6 +102,20 @@ const props = defineProps({
   windDirection: { type: Number, required: true },
   windSpeed: { type: Number, required: true },
   windGust: { type: Number, default: null },
+})
+
+const windDirectionTextX = computed(() => {
+  const wd = props.windDirection
+  // If wind direction is from 180 degrees (South) through West up to 359 degrees, or exactly 0/360 (North)
+  if ((wd >= 180 && wd <= 359) || wd === 0) {
+    return 170 // Position text to the right of the arrow's perceived vertical line
+  }
+  // Otherwise (wind direction is from 1 degree through East up to 179 degrees)
+  else {
+    return 230 // Position text to the left (was 180, making it more symmetrical with 230 vs 200 pivot)
+    // The original value you mentioned for this case was 180.
+    // If you prefer 180, use that. 170 makes the offset from center (200) consistent (30 units).
+  }
 })
 
 const majorAngles = computed(() => Array.from({ length: 12 }, (_, i) => i * 30))
@@ -108,6 +157,9 @@ const labelY = (angle) => {
 
 <style scoped>
 svg {
+  display: block;
+  width: 100%;
+  height: 100%;
   overflow: visible;
 }
 </style>

@@ -31,7 +31,7 @@ watch(
 </script>
 
 <template>
-  <main class="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+  <main class="min-h-screen h-screen overflow-hidden bg-black flex flex-col items-center p-3">
     <!-- Row 1: Input & Info -->
     <section class="w-full max-w-xl mb-4">
       <form @submit.prevent="fetchAirportData" class="flex gap-2 items-center">
@@ -118,15 +118,17 @@ watch(
       </table>
     </section>
     <!-- Row 3: Compass & Visuals -->
-    <section class="w-full max-w-xl">
-      <WindCompass
-        v-if="selectedRunway"
-        :runwayHeading="selectedRunway.heading_degrees"
-        :runwayName="selectedRunway.runway"
-        :windDirection="Number(store.decodedMetar.wind?.degrees)"
-        :windSpeed="Number(store.decodedMetar.wind?.speed)"
-        :windGust="Number(store.decodedMetar.wind?.gust)"
-      />
+    <section class="flex justify-center items-center w-full flex-1 my-8">
+      <div class="w-full h-full max-w-3xl aspect-square">
+        <WindCompass
+          v-if="selectedRunway"
+          :runwayHeading="selectedRunway.heading_degrees"
+          :runwayName="selectedRunway.runway"
+          :windDirection="Number(store.decodedMetar.wind?.degrees)"
+          :windSpeed="Number(store.decodedMetar.wind?.speed)"
+          :windGust="Number(store.decodedMetar.wind?.gust)"
+        />
+      </div>
     </section>
   </main>
 </template>
