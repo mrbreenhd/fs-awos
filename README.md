@@ -65,3 +65,7 @@ npm run build
 ```sh
 npm run lint
 ```
+
+//TODO Add autorefresh function
+//TODO Test side by side feature
+//TODO Add some version and copyright info
