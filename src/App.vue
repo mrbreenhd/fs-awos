@@ -52,7 +52,7 @@ watch(
             class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
           >
             <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
-              {{ runway.runway }} ({{ runway.heading_degrees }}°)
+              {{ runway.runway }}
             </option>
           </select>
         </div>
