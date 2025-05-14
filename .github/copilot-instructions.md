@@ -1,7 +1,8 @@
 # Guidelines
 
 - Always use the standard labels for git commit messages.
-- No description in the commit message body
+- No description in the commit message body.
+- DO NOT add explanatory text below the first line. Keep the git commit messages in one line.
 - Keep git commit messages concise
 - Do not show all the code that you propose, onlynthe important parts and keep it short
 - The application will be written with VUE framework. Use all the best practices from VUE. Use Composition API and VUE 3.

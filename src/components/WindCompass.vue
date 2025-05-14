@@ -104,20 +104,6 @@ const props = defineProps({
   windGust: { type: Number, default: null },
 })
 
-const windDirectionTextX = computed(() => {
-  const wd = props.windDirection
-  // If wind direction is from 180 degrees (South) through West up to 359 degrees, or exactly 0/360 (North)
-  if ((wd >= 180 && wd <= 359) || wd === 0) {
-    return 170 // Position text to the right of the arrow's perceived vertical line
-  }
-  // Otherwise (wind direction is from 1 degree through East up to 179 degrees)
-  else {
-    return 230 // Position text to the left (was 180, making it more symmetrical with 230 vs 200 pivot)
-    // The original value you mentioned for this case was 180.
-    // If you prefer 180, use that. 170 makes the offset from center (200) consistent (30 units).
-  }
-})
-
 const majorAngles = computed(() => Array.from({ length: 12 }, (_, i) => i * 30))
 
 const toRadians = (deg) => (deg * Math.PI) / 180
