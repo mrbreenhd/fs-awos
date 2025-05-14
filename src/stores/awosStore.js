@@ -3,11 +3,9 @@ import { parseMetar } from 'metar-taf-parser'
 import { ref } from 'vue'
 
 export const useAwosStore = defineStore('awos', () => {
-  const icaoAirport = ref('')
   const airport = ref({})
   const metar = ref('')
   const decodedMetar = ref({})
-  const selectedRunway = ref('')
 
   let metarFetchInterval = null
 
@@ -36,11 +34,9 @@ export const useAwosStore = defineStore('awos', () => {
     }, 60000) // Fetch every 60 seconds
   }
   return {
-    icaoAirport,
     airport,
     metar,
     decodedMetar,
-    selectedRunway,
     fetchMetar,
     fetchAirport,
     startMetarPolling,
