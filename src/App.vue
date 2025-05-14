@@ -159,7 +159,7 @@ store.$subscribe(() => {
           </div>
           <div class="text-sm text-gray-300">{{ store.airport.airport_name }}</div>
         </div>
-        
+
         <div
           class="bg-gray-900 text-gray-300 font-mono px-3 py-2 rounded mb-2 flex justify-between items-center"
         >
