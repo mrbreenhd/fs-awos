@@ -4,16 +4,19 @@ import { useAwosStore } from './stores/awosStore'
 import WindCompass from './components/WindCompass.vue'
 const store = useAwosStore()
 const inputIcao = ref('')
+const isLoading = ref(false)
 
 const selectedRunway = ref(null)
 
 const fetchAirportData = async () => {
   if (inputIcao.value) {
+    isLoading.value = true
     await store.fetchAirport(inputIcao.value.trim().toUpperCase())
     if (store.airport?.runways?.length) {
       selectedRunway.value = store.airport.runways[0]
     }
     store.fetchMetar(inputIcao.value.trim().toUpperCase())
+    isLoading.value = false
   }
 }
 
@@ -40,11 +43,23 @@ watch(
         <input
           v-model="inputIcao"
           maxlength="4"
+          :disabled="isLoading"
           class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
           placeholder="Enter ICAO"
         />
-        <button class="bg-green-700 text-black px-4 py-2 rounded font-bold">Load</button>
-
+        <button
+          :disabled="isLoading"
+          :class="[
+            'px-4 py-2 rounded font-bold flex items-center gap-2',
+            isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
+          ]"
+        >
+          <span
+            v-if="isLoading"
+            class="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"
+          ></span>
+          Load
+        </button>
         <div v-if="store.airport?.runways?.length" class="flex items-center gap-2 flex-1 min-w-0">
           <label class="text-green-400 font-bold">RWY:</label>
           <select
