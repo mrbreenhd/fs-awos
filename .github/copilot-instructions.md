@@ -1,5 +1,6 @@
 # Guidelines
 
+- Use conventional commit message format.Always use the imperative mood in the subject line. Do not capitalize the first letter of the subject line. Do not end the subject line with a period.Reference issues and pull requests liberally.
 - Always use the standard labels for git commit messages.
 - No description in the commit message body.
 - DO NOT add explanatory text below the first line. Keep the git commit messages in one line.
