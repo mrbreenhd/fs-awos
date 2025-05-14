@@ -9,6 +9,8 @@ export const useAwosStore = defineStore('awos', () => {
   const decodedMetar = ref({})
   const selectedRunway = ref('')
 
+  let metarFetchInterval = null
+
   // Actions
   const fetchMetar = async (icao) => {
     const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
@@ -25,6 +27,14 @@ export const useAwosStore = defineStore('awos', () => {
     airport.value = data
   }
 
+  const startMetarPolling = (icao) => {
+    if (metarFetchInterval) {
+      clearInterval(metarFetchInterval)
+    }
+    metarFetchInterval = setInterval(() => {
+      fetchMetar(icao)
+    }, 60000) // Fetch every 60 seconds
+  }
   return {
     icaoAirport,
     airport,
@@ -33,5 +43,6 @@ export const useAwosStore = defineStore('awos', () => {
     selectedRunway,
     fetchMetar,
     fetchAirport,
+    startMetarPolling,
   }
 })
