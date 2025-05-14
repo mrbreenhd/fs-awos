@@ -1,6 +1,7 @@
 # Guidelines
 
 - Always use the standard labels for git commit messages.
+- Use only standard labels for git commit messages; do not include any details or descriptions in the commit message body.
 - Do not show all the code that you propose, onlynthe important parts and keep it short
 - The application will be written with VUE framework. Use all the best practices from VUE. Use Composition API and VUE 3.
 - Use Pinia for state management.
