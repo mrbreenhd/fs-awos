@@ -30,43 +30,10 @@
       </text>
     </g>
 
-    <!-- Runway Strip -->
-    <rect
-      x="190"
-      y="100"
-      width="20"
-      height="200"
-      fill="#444"
-      :transform="'rotate(' + runwayHeading + ' 200 200)'"
-    />
-
-    <!-- Runway Name (Top) -->
-    <text
-      x="200"
-      y="115"
-      font-size="20"
-      text-anchor="middle"
-      fill="#0f0"
-      stroke="black"
-      stroke-width="0.5"
-      :transform="'rotate(' + runwayHeading + ' 200 200)'"
-    >
-      {{ runwayName }}
-    </text>
-
-    <!-- Opposite Runway (Bottom) -->
-    <text
-      x="200"
-      y="285"
-      font-size="20"
-      text-anchor="middle"
-      fill="#0f0"
-      stroke="black"
-      stroke-width="0.5"
-      :transform="'rotate(' + runwayHeading + ' 200 200)'"
-    >
-      {{ oppositeRunway }}
-    </text>
+    <!-- Runway Strip (only graphic, no text) -->
+    <g :transform="'rotate(' + runwayHeading + ' 200 200)'">
+      <rect x="190" y="100" width="20" height="200" fill="#444" />
+    </g>
 
     <!-- Wind Arrow and Wind Direction Label -->
     <g :transform="'rotate(' + windDirection + ' 200 200)'">
@@ -76,9 +43,9 @@
       </text>
     </g>
 
-    <!-- Wind Speed and Gust Display -->
-    <text x="200" y="215" font-size="20" text-anchor="middle" fill="#0f0" font-family="monospace">
-      {{ windSpeed }}{{ gustDisplay }} kt
+    <!-- Center Display: Runway and Wind -->
+    <text x="200" y="210" font-size="20" text-anchor="middle" fill="#0f0" font-family="monospace">
+      {{ runwayName }} / {{ windSpeed }}{{ gustDisplay }} kt
     </text>
 
     <!-- Headwind / Crosswind Components -->
@@ -103,11 +70,6 @@ const props = defineProps({
 })
 
 const majorAngles = computed(() => Array.from({ length: 12 }, (_, i) => i * 30))
-
-const oppositeRunway = computed(() => {
-  const opposite = (props.runwayHeading + 180) % 360
-  return String(Math.round(opposite / 10)).padStart(2, '0')
-})
 
 const toRadians = (deg) => (deg * Math.PI) / 180
 
