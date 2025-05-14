@@ -1,18 +1,50 @@
-# .
+# FS-AWOS (Flight Simulator Automated Weather Observation System)
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue.js application that graphically displays airport and METAR weather data for pilots, featuring runway visualization and wind information.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Airport search by ICAO code
+- Real-time METAR data visualization
+- Graphical wind/runway heading display
+- Wind component calculations (headwind/crosswind)
+- Detailed weather information
 
-## Customize configuration
+## How to Use
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. **Enter an airport ICAO code** (e.g., LGAV, EGLL, KJFK) in the input field
+2. **Click "Load"** to fetch airport and weather data
+3. **Select a runway** from the dropdown menu to see wind information relative to that runway
+4. **View the wind compass display** showing:
+   - Runway heading (gray strip)
+   - Current wind direction (red arrow)
+   - Headwind and crosswind components
+5. **Check METAR details** in the data panels for complete weather information
 
-## Project Setup
+The application automatically shows headwind/crosswind calculations and visually displays the relationship between wind direction and runway heading to help with landing/takeoff decisions.
+
+## Technologies Used
+
+- Vue.js 3 with Composition API
+- Pinia for state management
+- Tailwind CSS for styling
+- METAR-TAF Parser library
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version 16+)
+- npm or yarn
+
+### Installation
 
 ```sh
+# Clone the repository
+git clone https://github.com/yourusername/fs-awos.git
+cd fs-awos
+
+# Install dependencies
 npm install
 ```
 
