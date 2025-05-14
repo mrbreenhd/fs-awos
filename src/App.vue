@@ -76,11 +76,11 @@ watch(
     </section>
     <!-- Row 2: METAR Details -->
     <section class="w-full max-w-xl mb-4">
-      <div class="bg-gray-900 text-green-400 font-mono px-3 py-2 rounded mb-2">
+      <div class="bg-gray-900 text-gray-300 font-mono px-3 py-2 rounded mb-2">
         {{ store.metar }}
       </div>
       <div class="p-3 bg-gray-900 rounded">
-        <table class="w-full text-green-400 bg-gray-900 rounded text-md">
+        <table class="w-full text-gray-300 bg-gray-900 rounded text-md">
           <tbody>
             <tr>
               <td class="font-bold">Station</td>

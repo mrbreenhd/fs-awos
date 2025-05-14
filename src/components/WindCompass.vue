@@ -18,7 +18,7 @@
     <!-- Tick Labels -->
     <g
       font-size="12"
-      fill="#4ade80"
+      fill="#d1d5db"
       font-family="'Share Tech Mono', monospace"
       style="letter-spacing: 3px"
     >
@@ -75,7 +75,7 @@
       y="10"
       font-size="18"
       text-anchor="middle"
-      fill="white"
+      fill="#d1d5db"
       font-family="'Share Tech Mono', monospace"
       style="pointer-events: none"
     >
@@ -84,7 +84,7 @@
     </text>
 
     <!-- Headwind / Crosswind Components -->
-    <g font-size="14" font-family="'Share Tech Mono', monospace" fill="#4ade80">
+    <g font-size="14" font-family="'Share Tech Mono', monospace" fill="#d1d5db">
       <text x="200" y="435" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
       <text x="200" y="455" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
