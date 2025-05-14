@@ -1,7 +1,7 @@
 <template>
   <svg
     class="w-full h-full"
-    viewBox="-40 -40 480 600"
+    viewBox="-40 -40 480 480"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="xMidYMid meet"
   >
@@ -85,9 +85,12 @@
 
     <!-- Headwind / Crosswind Components -->
     <g font-size="14" font-family="'Share Tech Mono', monospace" fill="#d1d5db">
-      <text x="200" y="435" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
-      <text x="200" y="455" text-anchor="middle">
+      <text x="200" y="375" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
+      <text x="200" y="395" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
+      </text>
+      <text x="200" y="415" text-anchor="middle" font-size="11" fill="#888888" v-if="crosswind > 0">
+        {{ crosswindWarning }}
       </text>
     </g>
   </svg>
@@ -129,6 +132,16 @@ const crosswindDir = computed(() => {
 const hasGust = computed(() => props.windGust && props.windGust > props.windSpeed)
 
 const gustDisplay = computed(() => (hasGust.value ? `G${props.windGust}` : ''))
+
+// Add a warning message based on crosswind severity
+const crosswindWarning = computed(() => {
+  const xwind = crosswind.value
+  if (xwind > 25) return 'Severe crosswind conditions'
+  if (xwind > 15) return 'Strong crosswind conditions'
+  if (xwind > 10) return 'Moderate crosswind conditions'
+  if (xwind > 5) return 'Light crosswind conditions'
+  return ''
+})
 
 const labelRadius = 123
 const labelX = (angle) => {
