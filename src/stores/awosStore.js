@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
+import { parseMetar } from 'metar-taf-parser'
 import { ref } from 'vue'
 
 export const useAwosStore = defineStore('awos', () => {
   const icaoAirport = ref('')
   const airport = ref({})
   const metar = ref('')
+  const decodedMetar = ref({})
   const selectedRunway = ref('')
 
   // Actions
@@ -12,6 +14,7 @@ export const useAwosStore = defineStore('awos', () => {
     const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
     const data = await response.text()
     metar.value = data
+    decodedMetar.value = parseMetar(data)
   }
 
   const fetchAirport = async (icao) => {
@@ -26,6 +29,7 @@ export const useAwosStore = defineStore('awos', () => {
     icaoAirport,
     airport,
     metar,
+    decodedMetar,
     selectedRunway,
     fetchMetar,
     fetchAirport,

@@ -11,6 +11,7 @@ store.fetchAirport('LGAV')
   <div>
     <pre>{{ store.airport }}</pre>
     <pre>{{ store.metar }}</pre>
+    <pre>{{ store.decodedMetar }}</pre>
   </div>
 </template>
 
