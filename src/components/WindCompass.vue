@@ -69,24 +69,21 @@
       </g>
     </g>
 
-    <!-- Wind Direction, Speed, and Gust Label (Top Center) -->
-    <text
-      x="200"
-      y="10"
-      font-size="18"
-      text-anchor="middle"
-      fill="#d1d5db"
-      font-family="'Share Tech Mono', monospace"
-      style="pointer-events: none"
-    >
-      RWY: {{ runwayName }} - {{ windDirection.toString().padStart(3, '0') }}° / {{ windSpeed
-      }}{{ gustDisplay }} kt
-    </text>
-
     <!-- Headwind / Crosswind Components -->
     <g font-size="14" font-family="'Share Tech Mono', monospace" fill="#d1d5db">
-      <text x="200" y="375" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
-      <text x="200" y="395" text-anchor="middle">
+      <text
+        x="200"
+        y="400"
+        font-size="18"
+        text-anchor="middle"
+        fill="#d1d5db"
+        font-family="'Share Tech Mono', monospace"
+      >
+        RWY: {{ runwayName }} - {{ windDirection.toString().padStart(3, '0') }}° / {{ windSpeed
+        }}{{ gustDisplay }} kt
+      </text>
+      <text x="200" y="425" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
+      <text x="200" y="445" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
       </text>
       <text x="200" y="415" text-anchor="middle" font-size="11" fill="#888888" v-if="crosswind > 0">

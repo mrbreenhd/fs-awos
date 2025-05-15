@@ -145,10 +145,7 @@ store.$subscribe(() => {
     </section>
 
     <!-- Two-column layout for data -->
-    <div
-      v-if="hasData"
-      class="w-full max-w-6xl flex-1 flex flex-col md:flex-row gap-4 animate-fadeIn"
-    >
+    <div v-if="hasData" class="w-full max-w-6xl flex-1 flex flex-col md:flex-row gap-4 items-start">
       <!-- Column 1: METAR Details -->
       <section class="w-full md:w-1/2">
         <!-- Airport Header Info (moved from top section) -->
@@ -231,8 +228,8 @@ store.$subscribe(() => {
       </section>
 
       <!-- Column 2: Compass & Visuals -->
-      <section class="w-full md:w-1/2 flex justify-center items-center">
-        <div class="w-full h-full aspect-square">
+      <section class="w-full md:w-1/2">
+        <div class="w-full h-auto">
           <WindCompass
             v-if="selectedRunway"
             :runwayHeading="selectedRunway.heading_degrees"
