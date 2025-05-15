@@ -79,8 +79,8 @@
         fill="#d1d5db"
         font-family="'Share Tech Mono', monospace"
       >
-        RWY: {{ runwayName }} - {{ windDirection.toString().padStart(3, '0') }}° / {{ windSpeed
-        }}{{ gustDisplay }} kt
+        RWY: {{ runwayName }} - {{ numericWindDirection.toString().padStart(3, '0') }}° /
+        {{ windSpeed }}{{ gustDisplay }} kt
       </text>
       <text x="200" y="425" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
       <text x="200" y="445" text-anchor="middle">
@@ -109,9 +109,14 @@ const majorAngles = computed(() => Array.from({ length: 12 }, (_, i) => i * 30))
 const toRadians = (deg) => (deg * Math.PI) / 180
 
 const relativeAngle = computed(() => {
-  let delta = props.windDirection - props.runwayHeading
+  let delta = numericWindDirection.value - props.runwayHeading
   delta = ((delta + 540) % 360) - 180
   return delta
+})
+
+const numericWindDirection = computed(() => {
+  if (props.windDirection === 'VRB') return 0
+  return Number(props.windDirection) || 0
 })
 
 const headwind = computed(() => props.windSpeed * Math.cos(toRadians(relativeAngle.value)))
