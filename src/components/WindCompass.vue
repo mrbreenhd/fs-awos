@@ -54,8 +54,11 @@
     <!-- Opposite runway marker -->
     <g :transform="'rotate(' + (runwayHeading + 180) + ' 200 200)'">
       <g transform="translate(0, 180)">
-        <polygon points="200,30 190,0 210,0" fill="yellow" stroke="black" stroke-width="2" />
-        <rect x="198" y="0" width="4" height="15" fill="yellow" />
+        <!-- Use external plane.svg with yellow border, rotated 90deg -->
+        <g transform="rotate(90 200 15)">
+          <image x="185" y="0" width="30" height="30" xlink:href="/src/assets/plane.svg" />
+          <rect x="185" y="0" width="30" height="30" fill="none" />
+        </g>
       </g>
     </g>
     <!-- Digital readouts -->
