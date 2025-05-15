@@ -5,10 +5,12 @@ A Vue.js application that graphically displays airport and METAR weather data fo
 ## Features
 
 - Airport search by ICAO code
-- Real-time METAR data visualization
-- Graphical wind/runway heading display
-- Wind component calculations (headwind/crosswind)
-- Detailed weather information
+- Real-time METAR data visualization with automatic updates every 60 seconds
+- Two-column responsive layout optimized for desktop and mobile viewing
+- Graphical wind/runway heading display using an intuitive compass visualization
+- Wind component calculations (headwind/crosswind) with severity indicators
+- Detailed weather information with METAR decoding
+- Last update timestamp tracking
 
 ## How to Use
 
@@ -65,3 +67,19 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Version Information
+
+- Current Version: 1.0.0
+- Last Updated: May 2025
+- Created by: Flight Simulator AWOS Team
+
+## Copyright
+
+© 2025 FS-AWOS. All rights reserved.
+
+## Future Enhancements
+
+- Side-by-side comparison of multiple airports
+- Historical data tracking and trends
+- Integration with flight planning tools
