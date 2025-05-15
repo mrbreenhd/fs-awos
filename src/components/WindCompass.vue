@@ -75,7 +75,7 @@
       <text x="200" y="465" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
       </text>
-      <text x="200" y="420" text-anchor="middle" font-size="11" fill="#888888" v-if="crosswind > 0">
+      <text x="200" y="420" text-anchor="middle" font-size="11" fill="orange" v-if="crosswind > 0">
         {{ crosswindWarning }}
       </text>
     </g>
