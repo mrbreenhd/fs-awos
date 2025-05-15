@@ -2,14 +2,16 @@ import { defineStore } from 'pinia'
 import { parseMetar } from 'metar-taf-parser'
 import { ref } from 'vue'
 
+// Pinia store for AWOS state and actions
 export const useAwosStore = defineStore('awos', () => {
+  // State
   const airport = ref({})
   const metar = ref('')
   const decodedMetar = ref({})
 
   let metarFetchInterval = null
 
-  // Actions
+  // Fetch METAR data and decode it
   const fetchMetar = async (icao) => {
     try {
       const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
@@ -26,6 +28,7 @@ export const useAwosStore = defineStore('awos', () => {
     }
   }
 
+  // Fetch airport info (runways, name, etc)
   const fetchAirport = async (icao) => {
     try {
       const response = await fetch(
@@ -41,18 +44,18 @@ export const useAwosStore = defineStore('awos', () => {
     }
   }
 
+  // Reset all state and clear polling
   const resetData = () => {
     airport.value = {}
     metar.value = ''
     decodedMetar.value = {}
-
-    // Clear any existing polling interval
     if (metarFetchInterval) {
       clearInterval(metarFetchInterval)
       metarFetchInterval = null
     }
   }
 
+  // Start polling for METAR updates every 15 minutes
   const startMetarPolling = (icao) => {
     if (metarFetchInterval) {
       clearInterval(metarFetchInterval)
@@ -60,8 +63,7 @@ export const useAwosStore = defineStore('awos', () => {
     metarFetchInterval = setInterval(async () => {
       const success = await fetchMetar(icao)
       if (success) {
-        // We can use this to update the lastUpdated timestamp in the UI
-        // The $patch call will trigger any store.subscribe listeners
+        // Trigger reactivity for UI updates
         airport.value = { ...airport.value }
       }
     }, 60000 * 15)

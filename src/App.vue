@@ -1,17 +1,22 @@
 <script setup>
+// Import Vue, Pinia store, and WindCompass component
 import { ref, watch } from 'vue'
 import { useAwosStore } from './stores/awosStore'
 import WindCompass from './components/WindCompass.vue'
+
+// Pinia store instance
 const store = useAwosStore()
+// ICAO input field
 const inputIcao = ref('')
+// Loading and data state
 const isLoading = ref(false)
 const hasData = ref(false)
 const errorMessage = ref('')
 const lastUpdated = ref('')
-
+// Currently selected runway
 const selectedRunway = ref(null)
 
-// Format the current time for display
+// Update timestamp for last data fetch
 const updateTimestamp = () => {
   const now = new Date()
   const hours = now.getHours().toString().padStart(2, '0')
@@ -20,47 +25,42 @@ const updateTimestamp = () => {
   lastUpdated.value = `${hours}:${minutes}:${seconds}`
 }
 
+// Fetch airport and METAR data for given ICAO
 const fetchAirportData = async () => {
   if (inputIcao.value) {
     isLoading.value = true
     errorMessage.value = ''
-
-    // Reset data first
     store.resetData()
     hasData.value = false
-
     const icao = inputIcao.value.trim().toUpperCase()
+    // Fetch airport info
     const airportSuccess = await store.fetchAirport(icao)
-
     if (!airportSuccess) {
       errorMessage.value = `Could not find airport data for ICAO: ${icao}`
       isLoading.value = false
       return
     }
-
+    // Set default runway
     if (store.airport?.runways?.length) {
       selectedRunway.value = store.airport.runways[0]
     }
-
+    // Fetch METAR info
     const metarSuccess = await store.fetchMetar(icao)
     isLoading.value = false
-
     if (!metarSuccess) {
       errorMessage.value = `Could not find weather data for ICAO: ${icao}`
       return
     }
-
     hasData.value = store.airport && store.metar
     updateTimestamp()
-
-    // Start polling for METAR updates if data was successfully fetched
+    // Start polling for METAR updates
     if (hasData.value) {
       store.startMetarPolling(icao)
     }
   }
 }
 
-// Update selected runway if airport changes
+// Watch for airport changes to update selected runway
 watch(
   () => store.airport,
   (airport) => {
@@ -72,7 +72,7 @@ watch(
   },
 )
 
-// Set up a subscription to watch for store updates (needed for the timestamp update)
+// Update timestamp on METAR update
 store.$subscribe(() => {
   if (store.metar && hasData.value) {
     updateTimestamp()
@@ -82,49 +82,59 @@ store.$subscribe(() => {
 
 <template>
   <main class="min-h-screen h-screen overflow-y-auto bg-black flex flex-col items-center p-3">
-    <!-- Header: Input & Info -->
+    <!-- ICAO input and runway selector -->
     <section class="w-full max-w-6xl mb-4">
-      <!-- Form controls with labels -->
-      <form @submit.prevent="fetchAirportData" class="flex gap-2 items-center flex-wrap">
-        <label class="text-green-400 font-bold">ICAO:</label>
-        <input
-          v-model="inputIcao"
-          maxlength="4"
-          :disabled="isLoading"
-          class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
-          placeholder="Enter ICAO"
-          @keyup.enter="fetchAirportData"
-        />
-        <button
-          :disabled="isLoading"
-          :class="[
-            'px-4 py-2 rounded font-bold flex items-center gap-2',
-            isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
-          ]"
+      <form
+        @submit.prevent="fetchAirportData"
+        class="flex flex-wrap gap-2 justify-center items-center w-full"
+      >
+        <div class="flex flex-wrap gap-2 items-center justify-center">
+          <label class="text-green-400 font-bold">ICAO:</label>
+          <input
+            v-model="inputIcao"
+            maxlength="4"
+            :disabled="isLoading"
+            class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
+            placeholder="Enter ICAO"
+            @keyup.enter="fetchAirportData"
+          />
+          <button
+            :disabled="isLoading"
+            :class="[
+              'px-4 py-2 rounded font-bold flex items-center gap-2',
+              isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
+            ]"
+            style="min-width: 80px"
+          >
+            <span
+              v-if="isLoading"
+              class="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"
+            ></span>
+            Load
+          </button>
+        </div>
+        <div
+          class="flex items-center gap-2 min-w-[180px] flex-1 md:flex-none w-full md:w-auto justify-center"
         >
-          <span
-            v-if="isLoading"
-            class="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"
-          ></span>
-          Load
-        </button>
-        <div v-if="store.airport?.runways?.length" class="flex items-center gap-2 flex-1 min-w-0">
           <label class="text-green-400 font-bold">RWY:</label>
           <select
             v-model="selectedRunway"
             class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
+            :disabled="!store.airport?.runways?.length"
           >
-            <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
+            <option v-if="!store.airport?.runways?.length" disabled value="">No runways</option>
+            <option
+              v-for="runway in store.airport?.runways || []"
+              :key="runway.runway"
+              :value="runway"
+            >
               {{ runway.runway }}
             </option>
           </select>
         </div>
       </form>
-
-      <!-- Airport Header Info - Moved to left column -->
     </section>
-
-    <!-- No data message -->
+    <!-- Welcome or error message -->
     <section
       v-if="!hasData && !isLoading"
       class="w-full max-w-6xl flex-1 flex flex-col items-center justify-center"
@@ -143,12 +153,10 @@ store.$subscribe(() => {
         <p v-else>Enter an airport ICAO code above and click Load to view weather data</p>
       </div>
     </section>
-
-    <!-- Two-column layout for data -->
+    <!-- Main data display: left METAR, right compass -->
     <div v-if="hasData" class="w-full max-w-6xl flex-1 flex flex-col md:flex-row gap-4 items-start">
-      <!-- Column 1: METAR Details -->
       <section class="w-full md:w-1/2">
-        <!-- Airport Header Info (moved from top section) -->
+        <!-- Airport info header -->
         <div class="bg-gray-900 bg-opacity-60 p-3 rounded mb-2 animate-fadeIn">
           <div class="flex justify-between items-center">
             <div class="font-bold text-xl text-green-400">{{ store.airport.airport_icao }}</div>
@@ -156,7 +164,7 @@ store.$subscribe(() => {
           </div>
           <div class="text-sm text-gray-300">{{ store.airport.airport_name }}</div>
         </div>
-
+        <!-- METAR banner -->
         <div
           class="bg-gray-900 text-gray-300 font-mono px-3 py-2 rounded mb-2 flex justify-between items-center"
         >
@@ -165,9 +173,11 @@ store.$subscribe(() => {
             Last updated: {{ lastUpdated }}
           </div>
         </div>
+        <!-- Weather/airport data table -->
         <div class="p-3 bg-gray-900 rounded">
           <table class="w-full text-gray-300 bg-gray-900 rounded text-md">
             <tbody>
+              <!-- Station, time, wind, etc. -->
               <tr>
                 <td class="font-bold">Station</td>
                 <td>{{ store.decodedMetar.station }}</td>
@@ -226,9 +236,8 @@ store.$subscribe(() => {
           </table>
         </div>
       </section>
-
-      <!-- Column 2: Compass & Visuals -->
       <section class="w-full md:w-1/2 bg-gray-900 pb-5">
+        <!-- Wind compass visualization -->
         <div class="w-full h-auto">
           <WindCompass
             v-if="selectedRunway"
@@ -241,8 +250,7 @@ store.$subscribe(() => {
         </div>
       </section>
     </div>
-
-    <!-- Footer -->
+    <!-- Footer with GitHub link -->
     <footer
       class="w-full max-w-6xl text-gray-500 text-sm p-2 mt-4 flex flex-wrap text-center items-center gap-2 justify-center"
     >
