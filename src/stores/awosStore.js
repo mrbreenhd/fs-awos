@@ -64,7 +64,7 @@ export const useAwosStore = defineStore('awos', () => {
         // The $patch call will trigger any store.subscribe listeners
         airport.value = { ...airport.value }
       }
-    }, 60000) // Fetch every 60 seconds
+    }, 60000 * 15)
   }
 
   return {
