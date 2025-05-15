@@ -228,7 +228,7 @@ store.$subscribe(() => {
       </section>
 
       <!-- Column 2: Compass & Visuals -->
-      <section class="w-full md:w-1/2">
+      <section class="w-full md:w-1/2 bg-gray-900 pb-5">
         <div class="w-full h-auto">
           <WindCompass
             v-if="selectedRunway"
