@@ -31,9 +31,7 @@ export const useAwosStore = defineStore('awos', () => {
   // Fetch airport info (runways, name, etc)
   const fetchAirport = async (icao) => {
     try {
-      const response = await fetch(
-        `https://apps.estassinos.com/api/fs-core-data-api/airports.php?key=soulis&icao=${icao}`,
-      )
+      const response = await fetch(`/api/airport&icao=${icao}`)
       const data = await response.json()
       airport.value = data
       return true
