@@ -176,12 +176,16 @@ store.$subscribe(() => {
         <!-- Weather/airport data table -->
         <div class="p-3 bg-gray-900 rounded">
           <table class="w-full text-gray-300 bg-gray-900 rounded text-md">
-            <tbody>
-              <!-- Station, time, wind, etc. -->
-              <tr>
-                <td class="font-bold">Station</td>
-                <td>{{ store.decodedMetar.station }}</td>
+            <thead>
+              <tr class="border-b border-gray-700 text-left">
+                <th class="font-bold">Station</th>
+                <th class="font-bold">{{ store.decodedMetar.station }}</th>
               </tr>
+              <tr>
+                <td colspan="2" class="h-4"></td>
+              </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td class="font-bold">Time</td>
                 <td>
@@ -236,7 +240,7 @@ store.$subscribe(() => {
           </table>
         </div>
       </section>
-      <section class="w-full md:w-1/2 bg-gray-900 pb-5">
+      <section class="w-full md:w-1/2 bg-gray-900 pb-10">
         <!-- Wind compass visualization -->
         <div class="w-full h-auto">
           <WindCompass
