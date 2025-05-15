@@ -9,7 +9,6 @@ export const useAwosStore = defineStore('awos', () => {
 
   let metarFetchInterval = null
 
-  // Actions
   const fetchMetar = async (icao) => {
     try {
       const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
@@ -45,8 +44,6 @@ export const useAwosStore = defineStore('awos', () => {
     airport.value = {}
     metar.value = ''
     decodedMetar.value = {}
-
-    // Clear any existing polling interval
     if (metarFetchInterval) {
       clearInterval(metarFetchInterval)
       metarFetchInterval = null
@@ -60,8 +57,6 @@ export const useAwosStore = defineStore('awos', () => {
     metarFetchInterval = setInterval(async () => {
       const success = await fetchMetar(icao)
       if (success) {
-        // We can use this to update the lastUpdated timestamp in the UI
-        // The $patch call will trigger any store.subscribe listeners
         airport.value = { ...airport.value }
       }
     }, 60000 * 15)
