@@ -84,31 +84,38 @@ store.$subscribe(() => {
   <main class="min-h-screen h-screen overflow-y-auto bg-black flex flex-col items-center p-3">
     <!-- ICAO input and runway selector -->
     <section class="w-full max-w-6xl mb-4">
-      <form @submit.prevent="fetchAirportData" class="flex gap-2 items-center flex-wrap">
-        <label class="text-green-400 font-bold">ICAO:</label>
-        <input
-          v-model="inputIcao"
-          maxlength="4"
-          :disabled="isLoading"
-          class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
-          placeholder="Enter ICAO"
-          @keyup.enter="fetchAirportData"
-        />
-        <button
-          :disabled="isLoading"
-          :class="[
-            'px-4 py-2 rounded font-bold flex items-center gap-2',
-            isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
-          ]"
+      <form
+        @submit.prevent="fetchAirportData"
+        class="flex flex-wrap gap-2 justify-center items-center w-full"
+      >
+        <div class="flex flex-wrap gap-2 items-center justify-center">
+          <label class="text-green-400 font-bold">ICAO:</label>
+          <input
+            v-model="inputIcao"
+            maxlength="4"
+            :disabled="isLoading"
+            class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none uppercase"
+            placeholder="Enter ICAO"
+            @keyup.enter="fetchAirportData"
+          />
+          <button
+            :disabled="isLoading"
+            :class="[
+              'px-4 py-2 rounded font-bold flex items-center gap-2',
+              isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
+            ]"
+            style="min-width: 80px"
+          >
+            <span
+              v-if="isLoading"
+              class="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"
+            ></span>
+            Load
+          </button>
+        </div>
+        <div
+          class="flex items-center gap-2 min-w-[180px] flex-1 md:flex-none w-full md:w-auto justify-center"
         >
-          <span
-            v-if="isLoading"
-            class="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"
-          ></span>
-          Load
-        </button>
-        <!-- Always show runway dropdown, disabled if no runways -->
-        <div class="flex items-center gap-2 flex-1 min-w-0">
           <label class="text-green-400 font-bold">RWY:</label>
           <select
             v-model="selectedRunway"
