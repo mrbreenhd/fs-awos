@@ -243,9 +243,13 @@ store.$subscribe(() => {
     </div>
 
     <!-- Footer -->
-    <footer class="w-full max-w-6xl text-center text-gray-500 text-xs p-2 mt-4">
-      <p>FS-AWOS - Flight Simulator Airport Weather Observation System</p>
-      <p v-if="hasData">Data updates automatically every 60 seconds</p>
+    <footer
+      class="w-full max-w-6xl text-gray-500 text-sm p-2 mt-4 flex flex-wrap text-center items-center gap-2 justify-center"
+    >
+      <p>FS-AWOS - Metar updates every 15 min.</p>
+      <a href="https://github.com/e4rthdog/fs-awos" target="_blank" rel="noopener noreferrer">
+        <img src="@/assets/github-mark-white.svg" class="w-5 h-5" />
+      </a>
     </footer>
   </main>
 </template>
