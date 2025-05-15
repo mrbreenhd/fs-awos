@@ -240,7 +240,7 @@ store.$subscribe(() => {
           </table>
         </div>
       </section>
-      <section class="w-full md:w-1/2 bg-gray-900 pb-5">
+      <section class="w-full md:w-1/2 bg-gray-900 pb-10">
         <!-- Wind compass visualization -->
         <div class="w-full h-auto">
           <WindCompass

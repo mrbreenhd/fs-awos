@@ -71,11 +71,11 @@
         RWY: {{ runwayName }} - {{ numericWindDirection.toString().padStart(3, '0') }}° /
         {{ windSpeed }}{{ gustDisplay }} kt
       </text>
-      <text x="200" y="425" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
-      <text x="200" y="445" text-anchor="middle">
+      <text x="200" y="445" text-anchor="middle">Headwind: {{ headwind.toFixed(1) }} kt</text>
+      <text x="200" y="465" text-anchor="middle">
         Crosswind: {{ crosswind.toFixed(1) }} kt {{ crosswindDir }}
       </text>
-      <text x="200" y="415" text-anchor="middle" font-size="11" fill="#888888" v-if="crosswind > 0">
+      <text x="200" y="420" text-anchor="middle" font-size="11" fill="#888888" v-if="crosswind > 0">
         {{ crosswindWarning }}
       </text>
     </g>
