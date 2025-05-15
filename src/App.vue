@@ -107,13 +107,20 @@ store.$subscribe(() => {
           ></span>
           Load
         </button>
-        <div v-if="store.airport?.runways?.length" class="flex items-center gap-2 flex-1 min-w-0">
+        <!-- Always show runway dropdown, disabled if no runways -->
+        <div class="flex items-center gap-2 flex-1 min-w-0">
           <label class="text-green-400 font-bold">RWY:</label>
           <select
             v-model="selectedRunway"
             class="bg-gray-900 text-green-400 px-3 py-2 rounded outline-none w-full"
+            :disabled="!store.airport?.runways?.length"
           >
-            <option v-for="runway in store.airport.runways" :key="runway.runway" :value="runway">
+            <option v-if="!store.airport?.runways?.length" disabled value="">No runways</option>
+            <option
+              v-for="runway in store.airport?.runways || []"
+              :key="runway.runway"
+              :value="runway"
+            >
               {{ runway.runway }}
             </option>
           </select>
