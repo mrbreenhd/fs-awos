@@ -101,10 +101,13 @@ store.$subscribe(() => {
           <button
             :disabled="isLoading"
             :class="[
-              'px-4 py-2 rounded font-bold flex items-center gap-2',
-              isLoading ? 'bg-red-700 text-white' : 'bg-green-700 text-black',
+              'px-4 py-2 rounded font-bold flex items-center gap-2 transition-colors duration-150',
+              isLoading
+                ? 'bg-red-700 text-white cursor-not-allowed opacity-60'
+                : 'bg-green-700 text-black hover:bg-green-600 cursor-pointer',
             ]"
             style="min-width: 80px"
+            type="submit"
           >
             <span
               v-if="isLoading"
