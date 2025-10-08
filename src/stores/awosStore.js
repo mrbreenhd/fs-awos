@@ -13,6 +13,10 @@ export const useAwosStore = defineStore('awos', () => {
 
   // Fetch METAR data and decode it
   const fetchMetar = async (icao) => {
+    if(icao == "EIWT"){
+      icao = "EIME"
+    }
+
     try {
       const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
       const data = await response.text()
