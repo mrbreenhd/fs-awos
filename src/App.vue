@@ -267,7 +267,7 @@ store.$subscribe(() => {
     <footer
       class="w-full text-gray-500 text-sm p-2 mt-4 flex flex-wrap text-center items-center gap-2 justify-center"
     >
-      <p>FS-AWOS - Metar updates every 15 min.</p>
+      <p>FS-AWOS - </p>
       <a href="https://github.com/e4rthdog/fs-awos" target="_blank" rel="noopener noreferrer">
         <img src="@/assets/github-mark-white.svg" class="w-5 h-5" />
       </a>
