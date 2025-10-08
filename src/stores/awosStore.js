@@ -17,6 +17,7 @@ export const useAwosStore = defineStore('awos', () => {
       icao = "EIME"
     }
 
+
     try {
       const response = await fetch(`https://metar.vatsim.net/metar.php?id=${icao}`)
       const data = await response.text()
